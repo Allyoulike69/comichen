@@ -1,0 +1,4 @@
+# Pengganti .htaccess versi Cloudflare Pages / Netlify.
+# /p/659773 disodorin isi /p/base.html, URL tetap cantik, status 200 (SEO aman).
+# .htaccess tetap dipakai buat XAMPP lokal, file ini buat di cloud.
+/p/*  /p/base.html  200

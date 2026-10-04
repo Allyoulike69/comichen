@@ -16,10 +16,25 @@ export async function onRequest(context) {
   }
 
   // Sajikan isi /p/base.html dengan URL tetap cantik + status 200.
-  // Pakai string (bukan objek URL) + fallback ke next() biar tidak ERR_FAILED.
+  // ASSETS kadang mengembalikan redirect (mis. base.html tidak ketemu di
+  // deploy). Redirect HARUS diikutin manual di sini, karena kalau respon
+  // 3xx diteruskan mentah ke browser = "network error ... not follow".
   try {
-    const baseStr = new URL("/p/base.html", url.origin).toString();
-    const res = await context.env.ASSETS.fetch(baseStr);
+    const manual = { redirect: "manual" };
+    let res = await context.env.ASSETS.fetch(
+      new URL("/p/base.html", url.origin).toString(),
+      manual
+    );
+    let hops = 0;
+    while (res && res.status >= 300 && res.status < 400 && hops < 3) {
+      const loc = res.headers.get("location");
+      if (!loc) break;
+      res = await context.env.ASSETS.fetch(
+        new URL(loc, url.origin).toString(),
+        manual
+      );
+      hops++;
+    }
     if (!res || !res.ok) return context.next();
     return res;
   } catch (e) {

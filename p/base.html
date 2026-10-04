@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8" />
@@ -406,8 +406,15 @@
 <!-- BUILD 20261004-v9 -->
   <script src="main.js?v=9"></script>
   <script>
+  // Service worker DIMATIKAN permanen: SW basi dari deploy lama bisa
+  // menggagalkan navigasi /p/<id> total (ERR_FAILED di Chrome).
+  // Baris ini melepas semua SW yang mungkin nyangkut di pengunjung lama.
   if ("serviceWorker" in navigator) {
-      try { navigator.serviceWorker.register("sw.js").catch(function() {}); } catch (e) {}
+      try {
+          navigator.serviceWorker.getRegistrations().then(function (rs) {
+              rs.forEach(function (r) { try { r.unregister(); } catch (e) {} });
+          }).catch(function () {});
+      } catch (e) {}
   }
   </script>
 <script src="../tracker.js?v=4"></script>

@@ -247,10 +247,375 @@
 </head>
 <body>
 
-  <div id="header-placeholder"></div>
+  <div id="header-placeholder"><style>
+    /* HEADER CSS */
+    .main-header {
+        background: #0a0a0a;
+        padding: 10px 10px;
+        width: 100%;
+        position: relative;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    .logo-icon {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .logo-icon:hover {
+        transform: scale(1.05);
+        border-color: #ff5e7c;
+    }
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* SEARCH DESKTOP */
+    .desktop-search-wrapper { display: block; }
+    .search-panel-desktop {
+        display: flex;
+        background: #6d6a6a;
+        border: 1px solid #444;
+    }
+    .search-panel-desktop input {
+        background: transparent;
+        border: none;
+        padding: 8px;
+        color: white;
+        outline: none;
+        width: 250px;
+    }
+    .search-panel-desktop input::placeholder { color: #888; }
+    .search-panel-desktop button {
+        background: #ff0000;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        padding: 0px 10px;
+    }
+
+    .search-icon-mobile {
+        display: none;
+        background: none;
+        border: none;
+        color: #ffa74e;
+        font-size: 22px;
+        cursor: pointer;
+        padding: 8px;
+        flex-shrink: 0;
+    }
+
+    .hamburger-menu {
+        display: none;
+        background: #555;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 8px 12px;
+        flex-shrink: 0;
+        margin-left: auto;
+        border-radius: 5px;
+    }
+
+    .mobile-nav-overlay {
+        display: none;
+        width: 100%;
+        background: #333;
+        flex-direction: column;
+    }
+    .mobile-nav-overlay.show { display: flex; }
+    .mobile-nav-sidebar {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+    }
+    .mobile-nav-sidebar a {
+        color: #a5a4a4;
+        text-decoration: none;
+        padding: 12px 20px;
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .mobile-nav-sidebar a:hover {
+        background: #555;
+        color: white;
+    }
+    .mobile-nav-close {
+        display: none;
+    }
+
+    .mobile-search-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        background: #0a0a0a;
+        padding: 15px 20px;
+        z-index: 9999;
+        border-bottom: 2px solid #ffa74e;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .mobile-search-container {
+        display: flex;
+        align-items: center;
+        background: #222;
+        border-radius: 50px;
+        padding: 5px 15px;
+        border: 1px solid #444;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .mobile-search-container input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 12px 8px;
+        color: white;
+        font-size: 16px;
+        outline: none;
+    }
+    .mobile-search-container button {
+        background: transparent;
+        border: none;
+        color: #ffa74e;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 8px;
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-left: 20px;
+    }
+    .nav-menu a {
+        color: #ddd;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: color 0.2s;
+    }
+    .nav-menu a:hover { color: #ff0008; }
+    .nav-dropdown-click { position: relative; display: flex; align-items: center; }
+    .nav-dropdown-click .dropbtn-click { cursor: pointer; border: 1px solid #555; border-radius: 5px; padding: 5px 10px; background: #555; color: white; }
+    .dropdown-content-click {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 5px;
+        min-width: 140px;
+        z-index: 200;
+        flex-direction: column;
+        padding: 5px 0;
+    }
+    .dropdown-content-click a {
+        padding: 8px 15px;
+        font-size: 15px;
+        color: #a5a4a4;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .dropdown-content-click a:hover {
+        background: #777;
+        color: white;
+    }
+    .dropdown-content-click.show { display: flex; }
+
+    @media (max-width: 760px) {
+        .search-icon-mobile { display: none !important; }
+        .hamburger-menu { display: block !important; }
+        .nav-menu { display: none !important; }
+        .nav-dropdown-click { display: none !important; }
+        .logo-icon { width: 40px; height: 40px; }
+        .nav-menu a { font-size: 12px; }
+    }
+    @media (max-width: 1280px) and (min-width: 761px) {
+        .nav-menu a { display: none; }
+        .nav-dropdown-click { display: flex; }
+    }
+    @media (min-width: 1281px) {
+        .nav-dropdown-click { display: none; }
+    }
+    @media (max-width: 480px) {
+        .logo-icon { width: 36px; height: 36px; }
+        .nav-menu { gap: 10px; }
+        .nav-menu a { font-size: 11px; }
+    }
+    @media (max-width: 400px) {
+        .search-panel-desktop input { width: 190px; }
+    }
+</style>
+
+<div class="main-header">
+    <div class="top-bar">
+        <div class="logo-area" id="logoClick">
+            <img src="logo.png"
+                 alt="Allyoulike Comic Logo"
+                 class="logo-icon"
+                 onerror="this.onerror=null; this.src='https://placehold.co/48x48?text=AC'">
+        </div>
+
+        <div class="desktop-search-wrapper">
+            <div class="search-panel-desktop">
+                <input type="text" id="searchInputDesktop" placeholder="Search comics, manga, title...">
+                <button id="searchBtnDesktop"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+
+        <div class="nav-dropdown-click">
+            <a href="#" class="dropbtn-click"><i class="fa fa-angle-down"></i></a>
+            <div class="dropdown-content-click">
+                <a href="#" id="navRandom">Random</a>
+                <a href="../tags.html">Tags</a>
+                <a href="../artists.html">Artists</a>
+                <a href="../characters.html">Characters</a>
+                <a href="../parodies.html">Parodies</a>
+                <a href="../groups.html">Groups</a>
+            </div>
+        </div>
+        <div class="nav-menu">
+            <a href="#" id="navRandom">Random</a>
+            <a href="../tags.html">Tags</a>
+            <a href="../artists.html">Artists</a>
+            <a href="../characters.html">Characters</a>
+            <a href="../parodies.html">Parodies</a>
+            <a href="../groups.html">Groups</a>
+        </div>
+        <button class="search-icon-mobile" id="searchIconMobile">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button class="hamburger-menu" id="hamburgerMenu">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <div class="mobile-nav-sidebar">
+            <a href="#" id="navRandomMobile">Random</a>
+            <a href="../tags.html">Tags</a>
+            <a href="../artists.html">Artists</a>
+            <a href="../characters.html">Characters</a>
+            <a href="../parodies.html">Parodies</a>
+            <a href="../groups.html">Groups</a>
+        </div>
+    </div>
+</div>
+
+<div class="mobile-search-overlay" id="mobileSearchOverlay">
+    <div class="mobile-search-container">
+        <input type="text" id="searchInputMobile" placeholder="Search comics, manga, title..." autocomplete="off">
+        <button id="searchBtnMobile"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button id="closeSearchBtn"><i class="fa-solid fa-times"></i></button>
+    </div>
+</div></div>
 
   <!-- Top Banner -->
-  <div id="topbanner-container"></div>
+  <div id="topbanner-container"><style>
+    .ads-container-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin: 15px 0;
+    }
+    .ads-unit-small {
+        width: 320px;
+        height: 50px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<div class="ads-container-row" id="ads-container"></div>
+
+<script>
+    const iklanKey = '1f10a9d53612a8c49203598bffed7c49';
+    const container = document.getElementById('ads-container');
+
+    function getJumlahIklan() {
+        const w = window.innerWidth;
+        if (w >= 1285) return 4;
+        if (w >= 1080) return 3;
+        if (w >= 545) return 2;
+        return 1;
+    }
+
+    function buatIklan() {
+        container.innerHTML = '';
+        const jumlah = getJumlahIklan();
+        for (let i = 0; i < jumlah; i++) {
+            const adDiv = document.createElement('div');
+            adDiv.className = 'ads-unit-small';
+            const iframe = document.createElement('iframe');
+            iframe.width = '320';
+            iframe.height = '50';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'hidden';
+            iframe.scrolling = 'no';
+            adDiv.appendChild(iframe);
+            container.appendChild(adDiv);
+            const iframeContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        body { margin: 0; padding: 0; width: 320px; height: 50px; overflow: hidden; background: transparent; }
+                    </style>
+                </head>
+                <body>
+                    <script>
+                        atOptions = {
+                            'key' : '${iklanKey}',
+                            'format' : 'iframe',
+                            'height' : 50,
+                            'width' : 320,
+                            'params' : {}
+                        };
+                    <\/script>
+                    <script src="https://rhubarbambassadorweep.com/${iklanKey}/invoke.js"><\/script>
+                </body>
+                </html>
+            `;
+            const iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(iframeContent);
+            iframeDoc.close();
+        }
+    }
+
+    buatIklan();
+    window.addEventListener('resize', buatIklan);
+</script></div>
 
   <!-- KONTEN UTAMA -->
   <div class="main-content-wrapper">
@@ -268,14 +633,197 @@
       <h2 class="section-title"><span class="title-ribbon">More Like This</span></h2>
       <div id="more-like-this-grid" class="comic-grid"></div>
     </div>
-    <div id="middlebanner-container"></div>
-    <div id="bottombanner-container"></div>
+    <div id="middlebanner-container"><style>
+        /* Wadah utama middle banner */
+        .ads-middlecontainer-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        /* Kotak pembungkus tiap iklan middle */
+        .ads-unit-middle {
+            width: 100%;
+            max-width: 728px;
+            min-height: 90px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .ads-unit-middle {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <div class="ads-middlecontainer-row" id="ads-middlecontainer">
+        <div class="ads-unit-middle">
+            <div id="container-a1950b1b5b519135ac084cc06bee5a5a"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Hapus script invoke.js yang mungkin sudah ada sebelumnya
+            const oldScripts = document.querySelectorAll('script[src*="rhubarbambassadorweep.com"]');
+            oldScripts.forEach(old => {
+                if (old.parentNode) old.remove();
+            });
+
+            // Buat script baru
+            const script = document.createElement('script');
+            script.src = "https://rhubarbambassadorweep.com/a1950b1b5b519135ac084cc06bee5a5a/invoke.js";
+            script.async = true;
+            script.setAttribute('data-cfasync', 'false');
+
+            // Tambahkan ke body
+            document.body.appendChild(script);
+
+            console.log('MIDDLE BANNER: script berhasil dimuat');
+        })();
+    </script></div>
+    <div id="bottombanner-container"><style>
+        .ads-bottomcontainer-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin: 20px 0;
+        }
+        .ads-unit-bottom {
+            width: 300px;
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <div class="ads-bottomcontainer-row" id="ads-bottomcontainer"></div>
+
+    <script>
+        (function() {
+            const iklanKey = '5919fac96c79e892c7af2afe9607956a';
+            const container = document.getElementById('ads-bottomcontainer');
+            if (!container) return;
+
+            function getJumlahIklan() {
+                const w = window.innerWidth;
+                if (w >= 1285) return 4;
+                if (w >= 1080) return 3;
+                if (w >= 545) return 2;
+                return 1;
+            }
+
+            function buatIklan() {
+                container.innerHTML = '';
+                const jumlah = getJumlahIklan();
+                for (let i = 0; i < jumlah; i++) {
+                    const adDiv = document.createElement('div');
+                    adDiv.className = 'ads-unit-bottom';
+                    const iframe = document.createElement('iframe');
+                    iframe.width = '300';
+                    iframe.height = '250';
+                    iframe.style.border = 'none';
+                    iframe.style.overflow = 'hidden';
+                    iframe.scrolling = 'no';
+                    adDiv.appendChild(iframe);
+                    container.appendChild(adDiv);
+                    const iframeContent = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <style>
+                                body { margin: 0; padding: 0; width: 300px; height: 250px; overflow: hidden; background: transparent; }
+                            </style>
+                        </head>
+                        <body>
+                            <script>
+                                atOptions = {
+                                    'key' : '${iklanKey}',
+                                    'format' : 'iframe',
+                                    'height' : 250,
+                                    'width' : 300,
+                                    'params' : {}
+                                };
+                            <\/script>
+                            <script src="https://rhubarbambassadorweep.com/${iklanKey}/invoke.js"><\/script>
+                        </body>
+                        </html>
+                    `;
+                    const iframeDoc = iframe.contentWindow.document;
+                    iframeDoc.open();
+                    iframeDoc.write(iframeContent);
+                    iframeDoc.close();
+                }
+            }
+
+            buatIklan();
+            window.addEventListener('resize', buatIklan);
+        })();
+    </script></div>
   </div>
 
   <!-- Sosial Bar Container -->
 <div id="socialbar-container" class="socialbar-container"></div>
+<script src="https://rhubarbambassadorweep.com/61/bb/fc/61bbfca03b2f74a6f4d30300201fe5d4.js"></script>
+<script>
+// Ingat komik yang diklik (untuk URL cantik yang landing di base.html).
+document.addEventListener("click", function(e) {
+    try {
+        var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+        if (!a) return;
+        var href = a.getAttribute("href") || "";
+        var id = "";
+        var m = href.match(/[?&]id=([^&#]+)/);
+        if (m) id = decodeURIComponent(m[1]).replace(/^#/, "");
+        if (!id) {
+            var seg = href.split("?")[0].split("/").pop().replace(/\.html$/i, "");
+            if (/^\d+$/.test(seg)) id = seg;
+        }
+        if (!id) {
+            var c = href.match(/#(\d+)/);
+            if (c) id = c[1];
+        }
+        if (id) {
+            try { localStorage.setItem("lastComic", JSON.stringify({ id: id, t: Date.now() })); } catch (err) {}
+        }
+    } catch (err) {}
+}, true);
+</script>
 
-<div id="footer-placeholder"></div>
+<div id="footer-placeholder"><style>
+    .main-footer {
+        background: #030303;
+        border-top: 1px solid #222;
+        margin-top: 0px;
+        padding: 24px 20px;
+        text-align: center;
+        width: 100%;
+    }
+    .footer-text {
+        color: #888;
+        font-size: 13px;
+        letter-spacing: 0.3px;
+    }
+    .footer-text i {
+        color: #ff3b6f;
+        margin: 0 4px;
+    }
+</style>
+<footer class="main-footer">
+    <div class="footer-text">
+        © 2025 Allyoulike Comic - Gallery Comic Center. All rights reserved. | Designed with <i class="fa-solid fa-heart"></i> for comic lovers
+    </div>
+</footer></div>
 
   <div id="manga-reader">
     <div id="reader-top-bar">
@@ -392,15 +940,8 @@
             });
     }
 
-    // Memuat Top Banner, Middle Banner, Bottom Banner, Header, dan Footer
-    loadComponent('topbanner-container', 'topbanner.html');
-    loadComponent('middlebanner-container', 'middlebanner.html');
-    loadComponent('bottombanner-container', 'bottombanner.html');
-    loadComponent('header-placeholder', 'header.html');
-    loadComponent('footer-placeholder', 'footer.html');
-    
-    // Memuat sosial bar dari file sosialbar.html
-    loadSocialBar();
+    // Header, banner, footer, sosialbar sudah ditanam langsung di HTML
+    // (anti fetch gagal di GitHub/Cloudflare). Tidak perlu dimuat lagi.
 </script>
 
 <!-- BUILD 20261004-v9 -->

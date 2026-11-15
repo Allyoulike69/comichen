@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <!-- 404 fallback GitHub/Cloudflare Pages: copy dari p/base.html (isi sudah
@@ -486,6 +486,7 @@
             <img src="logo.png"
                  alt="Allyoulike Comic Logo"
                  class="logo-icon"
+                 loading="lazy"
                  onerror="this.onerror=null; this.src='https://placehold.co/48x48?text=AC'">
         </div>
 
@@ -852,7 +853,7 @@ document.addEventListener("click", function(e) {
     </div>
 
     <div id="reader-content">
-      <img id="reader-image" onclick="nextPage()" alt="Manga Page">
+      <img id="reader-image" onclick="nextPage()" alt="Manga Page" loading="lazy">
     </div>
 
     <div id="reader-bottom-bar">

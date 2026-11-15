@@ -998,7 +998,7 @@ function ensureInfoContainer() {
     container.id = 'infocomic-container';
     container.innerHTML = `
       <div class="info-image">
-        <img id="info-cover" src="https://placehold.co/200x300?text=No+Image" alt="Cover">
+        <img id="info-cover" src="https://placehold.co/200x300?text=No+Image" alt="Cover" loading="lazy">
       </div>
       <div class="info-details">
         <div class="info-item"><span class="info-value" id="info-title" style="font-size:18px;font-weight:700;">-</span></div>
